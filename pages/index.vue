@@ -21,3 +21,19 @@ export default {
   }
 }
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400&display=swap');
+
+:root{
+  --cor-1: #4F4789;
+  --cor-2: #EEBA0B;
+  --cor-3: #7FC29B;
+  --cor-4: #3AAED8;
+  --cor-5: #CC3F0C;
+
+  --font-padrao: 'Open Sans', sans-serif;
+  --font-destaques: 'Bebas Neue', cursive;
+}
+
+</style>
