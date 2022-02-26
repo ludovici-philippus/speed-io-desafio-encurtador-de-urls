@@ -1,7 +1,6 @@
 <template>
   <div id="root">
     <Header />
-    <h2>{{ api }}</h2>
     <Main />
   </div>
 </template>
@@ -13,16 +12,6 @@ export default {
     return {
       api: 'Oi',
     }
-  },
-  methods: {
-    get_data: async function () {
-      const api = await this.$axios
-        .$get('http://localhost:5000')
-        .then((response) => (this.api = response))
-    },
-  },
-  mounted() {
-    this.get_data()
   },
 }
 </script>

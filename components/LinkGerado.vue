@@ -2,8 +2,8 @@
   <div class="container">
     <div class="card">
       <h2>O seu link foi gerado com sucesso:</h2>
-      <a :href="this.$store.getters.getLinkNovo">{{ this.$store.getters.getTitulo }}</a>
-      <a :href="this.$store.getters.getLinkNovo">{{ this.$store.getters.getLinkNovo }}</a>
+      <a target="_blank" rel="external" :href="this.$store.getters.getLinkNovo">{{ this.$store.getters.getTitulo }}</a>
+      <a target="_blank" rel="external" :href="this.$store.getters.getLinkNovo">{{ this.$store.getters.getLinkNovo }}</a>
     </div>
   </div>
 </template>
