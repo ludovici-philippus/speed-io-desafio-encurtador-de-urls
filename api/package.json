@@ -18,6 +18,8 @@
   "homepage": "https://github.com/ludovici-philippus/speed-io-desafio-encurtador-de-urls#readme",
   "dependencies": {
     "body-parser": "^1.19.2",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "mysql2": "^2.3.3"
   }
 }

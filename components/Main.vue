@@ -1,21 +1,20 @@
 <template>
   <main>
-    <CriarLink/>
-    <LinkGerado v-if="gerou"/>
+    <CriarLink />
+    <LinkGerado v-if="this.$store.getters.getGerou" />
   </main>
 </template>
 
 <script>
-  export default{
-    name: "Main",
-    data(){
-      return{
-        gerou: false
-      }
+export default {
+  name: 'Main',
+  data() {
+    return {
+      gerou: false,
     }
-  }
+  },
+
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

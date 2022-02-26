@@ -8,30 +8,30 @@
 </template>
 
 <script>
-  export default{
-    name: "HeaderLinks"
-  }
+export default {
+  name: 'HeaderLinks',
+}
 </script>
 
 <style scoped>
-  ul{
-    list-style: none;
-    text-align: center;
-    margin-top: 10px;
-  }
+ul {
+  list-style: none;
+  text-align: center;
+  margin-top: 10px;
+}
 
-  li{
-    display: inline-block;
-    margin-right: 6px;
-  }
+li {
+  display: inline-block;
+  margin-right: 6px;
+}
 
-  a{
-    color: var(--cor-2);
-    text-decoration: none;
-    font-size: 18px;
-  }
+a {
+  color: var(--cor-2);
+  text-decoration: none;
+  font-size: 18px;
+}
 
-  a:hover{
-    text-decoration: underline;
-  }
+a:hover {
+  text-decoration: underline;
+}
 </style>
