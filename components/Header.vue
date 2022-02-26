@@ -34,4 +34,7 @@
     font-weight: lighter;
     color: white;
   }
+  .container{
+    flex-direction: column;
+  }
 </style>

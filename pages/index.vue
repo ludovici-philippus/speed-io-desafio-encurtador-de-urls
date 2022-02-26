@@ -1,5 +1,8 @@
 <template>
-  <Header/>
+  <div id="root">
+    <Header/>
+    <Main/>
+  </div>
 </template>
 
 <script>
@@ -51,6 +54,9 @@ h1, h2, h3, h4, h5, h6{
   max-width: 900px;
   margin: auto;
   padding: 0 2%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 </style>
