@@ -43,6 +43,7 @@ app.get("/:slug", async (req, res) => {
   const sql = await db.connect();
   const [row] = await sql.execute("SELECT link_original FROM `tb_links` WHERE link_encurtado = ?", [req.params.slug]);
   if(row.length == 1){
+    await add_view_to_link(req, sql);
     res.writeHead(302, {
       location: row[0].link_original
     });
@@ -77,6 +78,10 @@ async function create_short_link(req, sql){
       const link_novo = req.query.link_novo;
 
       await sql.execute("INSERT INTO `tb_links` VALUES (null, ?, ?, ?, null, 0)", [titulo, link_original, link_novo]);
+}
+
+async function add_view_to_link(req, sql){
+  await sql.execute("UPDATE `tb_links` SET views = views+1 WHERE link_encurtado = ?", [req.params.slug])
 }
 
 app.listen(5000, () => {
