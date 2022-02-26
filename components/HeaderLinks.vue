@@ -2,7 +2,7 @@
   <nav>
     <ul>
       <li><NuxtLink to="/">Home</NuxtLink></li>
-      <li><NuxtLink to="/top">Top 100</NuxtLink></li>
+      <li><NuxtLink to="/top-cem">Top 100</NuxtLink></li>
     </ul>
   </nav>
 </template>

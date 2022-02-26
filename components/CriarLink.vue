@@ -33,7 +33,7 @@ export default {
       const link_novo = await this.generateUNID(url_length);
       console.log(link_novo);
 
-      /* Verifica se o id já existe no banco de dados, caso não, ele retorna o valor e adiciona as informações no banco de dados. */
+      /* Verifica se o id já existe no banco de dados; caso não, ele retorna o valor e adiciona as informações no banco de dados. */
       if(await this.idExists(link_novo, titulo, link_original, link_novo) == "false"){
         this.$store.commit("gerar", [titulo, this.$store.getters.getApiPath+link_novo]);
       }else{
@@ -48,16 +48,18 @@ export default {
       /* Gera um ID pseudo aleatório */
       let result = "";
       let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let charactersLength = characters.length;
+      let characters_length = characters.length;
+
       for(let i = 0; i < length; i++){
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        result += characters.charAt(Math.floor(Math.random() * characters_length));
       }
       return result;
     },
 
     idExists: async function(unid, titulo, link_original, link_novo){
-        const existe = await this.$axios.$get(this.$store.getters.getApiPath+'exists/'+unid+'?titulo='+titulo+'&link_original='+link_original+'&link_novo='+link_novo).then(function(response){
-        console.log(response.existe);
+      const api_request = this.$store.getters.getApiPath+'exists/'+unid+'?titulo='+titulo+'&link_original='+link_original+'&link_novo='+link_novo;
+      const existe = await this.$axios.$get(api_request).then(function(response){
+
         return response.existe;
       });
       return existe;

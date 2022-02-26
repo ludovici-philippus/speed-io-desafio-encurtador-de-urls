@@ -39,6 +39,12 @@ app.get('/', async (req, res) => {
   res.end('aaaa')
 });
 
+app.get("/get-urls", async(req, res) => {
+  const sql = await db.connect();
+  const [row] = await sql.execute("SELECT * FROM `tb_links` ORDER BY views DESC");
+  res.jsonp(row);
+});
+
 app.get("/:slug", async (req, res) => {
   const sql = await db.connect();
   const [row] = await sql.execute("SELECT link_original FROM `tb_links` WHERE link_encurtado = ?", [req.params.slug]);
