@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 
 export const state = () => ({
   gerou: false,
+  link_valido: true,
   titulo: "",
   link_novo: "",
   api_path: "http://localhost:5000/"
@@ -13,6 +14,9 @@ export const mutations = {
     state.titulo = params[0];
     state.link_novo = params[1];
   },
+  validar(state, value){
+    state.link_valido = value;
+  }
 }
 
 export const getters = {
@@ -27,5 +31,8 @@ export const getters = {
   },
   getApiPath(state){
     return state.api_path;
+  },
+  getLinkValido(state){
+    return state.link_valido;
   }
 }

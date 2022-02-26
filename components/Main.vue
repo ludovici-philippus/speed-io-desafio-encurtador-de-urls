@@ -2,6 +2,7 @@
   <main>
     <CriarLink />
     <LinkGerado v-if="this.$store.getters.getGerou" />
+    <CardErro v-if="this.$store.getters.getLinkValido == false"/>
   </main>
 </template>
 

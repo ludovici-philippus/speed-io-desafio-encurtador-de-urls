@@ -23,25 +23,59 @@
 <script>
 export default {
   name: 'CriarLink',
+  data(){
+    return{
+      url_length: 3
+    }
+  },
   methods: {
 
     gerarLink: async function () {
       const titulo = document.querySelector('#titulo').value;
-      const link_original = document.querySelector('#link_original').value;
-      const url_length = 3;
+      let link_original = document.querySelector('#link_original').value;
 
-      const link_novo = await this.generateUNID(url_length);
+      if(this.estaVazio([titulo, link_original]) == true){
+        alert("Campos vazios não são permitidos!");
+        this.$store.commit("validar", false);
+        return false;
+      }else if(this.verificaHttpLink(link_original) != true){
+        link_original = this.verificaHttpLink(link_original);
+      }
+      this.$store.commit("validar", true);
+
+      const link_novo = await this.generateUNID(this.url_length);
       console.log(link_novo);
+      console.log(this.url_length);
 
       /* Verifica se o id já existe no banco de dados; caso não, ele retorna o valor e adiciona as informações no banco de dados. */
       if(await this.idExists(link_novo, titulo, link_original, link_novo) == "false"){
         this.$store.commit("gerar", [titulo, this.$store.getters.getApiPath+link_novo]);
       }else{
-        url_length++;
-        this.generateUNID(url_length);
+        this.url_length += 1;
+        this.generateUNID(this.url_length);
       }
       /*=== FIM ===*/
 
+    },
+
+    verificaHttpLink: function(link){
+      if(link.substring(0, 3) != "http"){
+        link = "http://"+link;
+        return link;
+      }
+      return true;
+    },
+
+    estaVazio: function(campos_a_validar){
+      let vazio = false;
+      campos_a_validar.map((val) => {
+        console.log(val.length == 0);
+        if(val == '' || val.length == 0){
+          vazio = true;
+          return;
+        }
+      });
+      return vazio;
     },
 
     generateUNID: async function(length){

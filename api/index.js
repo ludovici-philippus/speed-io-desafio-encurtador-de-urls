@@ -65,7 +65,7 @@ app.get("/exists/:slug", async(req, res) => {
     /*Verifica se determinado link já existe no banco de dados.*/
     const sql = await db.connect();
     const [row] = await sql.execute("SELECT link_encurtado FROM `tb_links` WHERE link_encurtado = ?", [req.params.slug]);
-    if(row.length == 0){
+    if(row.length == 0 && req.query.link_original != "http://"){
       await create_short_link(req, sql);
       let jsonData = '{"existe": "false"}';
       let jsonParsed = JSON.parse(jsonData);

@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <label :for="name">{{ label }}</label>
-    <input type="text" :name="name" :id="name" :placeholder="placeholder" />
+    <input type="text" :name="name" :id="name" :placeholder="placeholder" required/>
   </div>
 </template>
 
