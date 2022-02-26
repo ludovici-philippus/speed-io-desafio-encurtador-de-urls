@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ api }}</h1>
+  <Header/>
 </template>
 
 <script>
@@ -34,6 +34,23 @@ export default {
 
   --font-padrao: 'Open Sans', sans-serif;
   --font-destaques: 'Bebas Neue', cursive;
+}
+
+*{
+  font-family: var(--font-padrao);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: var(--font-destaques);
+}
+
+.container{
+  max-width: 900px;
+  margin: auto;
+  padding: 0 2%;
 }
 
 </style>
