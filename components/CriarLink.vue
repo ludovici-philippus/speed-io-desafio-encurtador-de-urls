@@ -44,8 +44,6 @@ export default {
       this.$store.commit("validar", true);
 
       const link_novo = await this.generateUNID(this.url_length);
-      console.log(link_novo);
-      console.log(this.url_length);
 
       /* Verifica se o id já existe no banco de dados; caso não, ele retorna o valor e adiciona as informações no banco de dados. */
       if(await this.idExists(link_novo, titulo, link_original, link_novo) == "false"){
@@ -69,7 +67,6 @@ export default {
     estaVazio: function(campos_a_validar){
       let vazio = false;
       campos_a_validar.map((val) => {
-        console.log(val.length == 0);
         if(val == '' || val.length == 0){
           vazio = true;
           return;
