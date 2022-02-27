@@ -3,14 +3,14 @@
 </template>
 
 <script>
-  export default{
-    name: "Button",
-    props: {
-      on_click: Function,
-      type: String,
-      text: String,
-    }
-  }
+export default {
+  name: 'Button',
+  props: {
+    on_click: Function,
+    type: String,
+    text: String,
+  },
+}
 </script>
 
 <style scoped>

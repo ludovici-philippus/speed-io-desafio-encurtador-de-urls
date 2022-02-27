@@ -22,14 +22,16 @@ Vue.component(ClientOnly.name, ClientOnly)
 // TODO: Remove in Nuxt 3: <NoSsr>
 Vue.component(NoSsr.name, {
   ...NoSsr,
-  render (h, ctx) {
+  render(h, ctx) {
     if (process.client && !NoSsr._warned) {
       NoSsr._warned = true
       // eslint-disable-next-line no-console
-      console.warn('<no-ssr> has been deprecated and will be removed in Nuxt 3, please use <client-only> instead')
+      console.warn(
+        '<no-ssr> has been deprecated and will be removed in Nuxt 3, please use <client-only> instead'
+      )
     }
     return NoSsr.render(h, ctx)
-  }
+  },
 })
 
 // Component: <NuxtChild>
@@ -49,22 +51,40 @@ Object.defineProperty(Vue.prototype, '$nuxt', {
     }
     return globalNuxt
   },
-  configurable: true
+  configurable: true,
 })
 
-Vue.use(Meta, {"keyName":"head","attribute":"data-n-head","ssrAttribute":"data-n-head-ssr","tagIDKeyName":"hid"})// eslint-disable-line
+Vue.use(Meta, {
+  keyName: 'head',
+  attribute: 'data-n-head',
+  ssrAttribute: 'data-n-head-ssr',
+  tagIDKeyName: 'hid',
+}) // eslint-disable-line
 
-const defaultTransition = {"name":"page","mode":"out-in","appear":false,"appearClass":"appear","appearActiveClass":"appear-active","appearToClass":"appear-to"}// eslint-disable-line
+const defaultTransition = {
+  name: 'page',
+  mode: 'out-in',
+  appear: false,
+  appearClass: 'appear',
+  appearActiveClass: 'appear-active',
+  appearToClass: 'appear-to',
+} // eslint-disable-line
 
 const originalRegisterModule = Vuex.Store.prototype.registerModule
 
-function registerModule (path, rawModule, options = {}) {
-  const preserveState = process.client && (
-    Array.isArray(path)
-      ? !!path.reduce((namespacedState, path) => namespacedState && namespacedState[path], this.state)
-      : path in this.state
-  )
-  return originalRegisterModule.call(this, path, rawModule, { preserveState, ...options })
+function registerModule(path, rawModule, options = {}) {
+  const preserveState =
+    process.client &&
+    (Array.isArray(path)
+      ? !!path.reduce(
+          (namespacedState, path) => namespacedState && namespacedState[path],
+          this.state
+        )
+      : path in this.state)
+  return originalRegisterModule.call(this, path, rawModule, {
+    preserveState,
+    ...options,
+  })
 }
 
 async function createApp(ssrContext, config = {}) {
@@ -83,7 +103,7 @@ async function createApp(ssrContext, config = {}) {
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
     /* eslint-disable array-bracket-spacing, quotes, quote-props, semi, indent, comma-spacing, key-spacing, object-curly-spacing, space-before-function-paren, object-shorthand  */
-    head: {"meta":[],"link":[],"style":[],"script":[]},
+    head: { meta: [], link: [], style: [], script: [] },
     /* eslint-enable array-bracket-spacing, quotes, quote-props, semi, indent, comma-spacing, key-spacing, object-curly-spacing, space-before-function-paren, object-shorthand */
 
     store,
@@ -91,7 +111,7 @@ async function createApp(ssrContext, config = {}) {
     nuxt: {
       defaultTransition,
       transitions: [defaultTransition],
-      setTransitions (transitions) {
+      setTransitions(transitions) {
         if (!Array.isArray(transitions)) {
           transitions = [transitions]
         }
@@ -99,7 +119,9 @@ async function createApp(ssrContext, config = {}) {
           if (!transition) {
             transition = defaultTransition
           } else if (typeof transition === 'string') {
-            transition = Object.assign({}, defaultTransition, { name: transition })
+            transition = Object.assign({}, defaultTransition, {
+              name: transition,
+            })
           } else {
             transition = Object.assign({}, defaultTransition, transition)
           }
@@ -111,7 +133,7 @@ async function createApp(ssrContext, config = {}) {
 
       err: null,
       dateErr: null,
-      error (err) {
+      error(err) {
         err = err || null
         app.context._errored = Boolean(err)
         err = err ? normalizeError(err) : null
@@ -126,15 +148,17 @@ async function createApp(ssrContext, config = {}) {
           ssrContext.nuxt.error = err
         }
         return err
-      }
+      },
     },
-    ...App
+    ...App,
   }
 
   // Make app available into store via this.app
   store.app = app
 
-  const next = ssrContext ? ssrContext.next : location => app.router.push(location)
+  const next = ssrContext
+    ? ssrContext.next
+    : (location) => app.router.push(location)
   // Resolve route
   let route
   if (ssrContext) {
@@ -154,7 +178,7 @@ async function createApp(ssrContext, config = {}) {
     req: ssrContext ? ssrContext.req : undefined,
     res: ssrContext ? ssrContext.res : undefined,
     beforeRenderFns: ssrContext ? ssrContext.beforeRenderFns : undefined,
-    ssrContext
+    ssrContext,
   })
 
   function inject(key, value) {
@@ -186,9 +210,9 @@ async function createApp(ssrContext, config = {}) {
     Vue.use(() => {
       if (!Object.prototype.hasOwnProperty.call(Vue.prototype, key)) {
         Object.defineProperty(Vue.prototype, key, {
-          get () {
+          get() {
             return this.$root.$options[key]
-          }
+          },
         })
       }
     })
@@ -234,7 +258,8 @@ async function createApp(ssrContext, config = {}) {
     router.replace(app.context.route.fullPath, resolve, (err) => {
       // https://github.com/vuejs/vue-router/blob/v3.4.3/src/util/errors.js
       if (!err._isRouter) return reject(err)
-      if (err.type !== 2 /* NavigationFailureType.redirected */) return resolve()
+      if (err.type !== 2 /* NavigationFailureType.redirected */)
+        return resolve()
 
       // navigated to a different route in router guard
       const unregister = router.afterEach(async (to, from) => {
@@ -253,7 +278,7 @@ async function createApp(ssrContext, config = {}) {
   return {
     store,
     app,
-    router
+    router,
   }
 }
 

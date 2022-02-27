@@ -1,11 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { normalizeURL, decode } from 'ufo'
-import { interopDefault } from './utils'// eslint-disable-line no-unused-vars
+import { interopDefault } from './utils' // eslint-disable-line no-unused-vars
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _c78cccd0 = () => interopDefault(import('../pages/top-cem.vue' /* webpackChunkName: "pages/top-cem" */))
-const _64b26e57 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _c78cccd0 = () =>
+  interopDefault(
+    import('../pages/top-cem.vue' /* webpackChunkName: "pages/top-cem" */)
+  )
+const _64b26e57 = () =>
+  interopDefault(
+    import('../pages/index.vue' /* webpackChunkName: "pages/index" */)
+  )
 
 const emptyFn = () => {}
 
@@ -18,27 +24,30 @@ export const routerOptions = {
   linkExactActiveClass: 'nuxt-link-exact-active',
   scrollBehavior,
   /* eslint-disable array-bracket-spacing, quotes, quote-props, object-curly-spacing, key-spacing */
-  routes: [{
-    path: "/top-cem",
-    component: _c78cccd0,
-    name: "top-cem"
-  }, {
-    path: "/",
-    component: _64b26e57,
-    name: "index"
-  }],
+  routes: [
+    {
+      path: '/top-cem',
+      component: _c78cccd0,
+      name: 'top-cem',
+    },
+    {
+      path: '/',
+      component: _64b26e57,
+      name: 'index',
+    },
+  ],
   /* eslint-enable array-bracket-spacing, quotes, quote-props, object-curly-spacing, key-spacing */
 
-  fallback: false
+  fallback: false,
 }
 
-export function createRouter (ssrContext, config) {
+export function createRouter(ssrContext, config) {
   const base = (config._app && config._app.basePath) || routerOptions.base
-  const router = new Router({ ...routerOptions, base  })
+  const router = new Router({ ...routerOptions, base })
 
   // TODO: remove in Nuxt 3
   const originalPush = router.push
-  router.push = function push (location, onComplete = emptyFn, onAbort) {
+  router.push = function push(location, onComplete = emptyFn, onAbort) {
     return originalPush.call(this, location, onComplete, onAbort)
   }
 

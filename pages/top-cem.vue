@@ -1,14 +1,14 @@
 <template>
   <div id="root">
-    <Header/>
-    <TopMain/>
+    <Header />
+    <TopMain />
   </div>
 </template>
 
 <script>
-  export default{
-    name: "top_cem"
-  }
+export default {
+  name: 'top_cem',
+}
 </script>
 
 <style>

@@ -3,9 +3,9 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-let store = {};
+let store = {}
 
-(function updateModules () {
+;(function updateModules() {
   store = normalizeRoot(require('../store/index.js'), 'store/index.js')
 
   // If store is an exported method = classic mode (deprecated)
@@ -17,17 +17,27 @@ let store = {};
 })()
 
 // createStore
-export const createStore = store instanceof Function ? store : () => {
-  return new Vuex.Store(Object.assign({
-    strict: (process.env.NODE_ENV !== 'production')
-  }, store))
-}
+export const createStore =
+  store instanceof Function
+    ? store
+    : () => {
+        return new Vuex.Store(
+          Object.assign(
+            {
+              strict: process.env.NODE_ENV !== 'production',
+            },
+            store
+          )
+        )
+      }
 
-function normalizeRoot (moduleData, filePath) {
+function normalizeRoot(moduleData, filePath) {
   moduleData = moduleData.default || moduleData
 
   if (moduleData.commit) {
-    throw new Error(`[nuxt] ${filePath} should export a method that returns a Vuex instance.`)
+    throw new Error(
+      `[nuxt] ${filePath} should export a method that returns a Vuex instance.`
+    )
   }
 
   if (typeof moduleData !== 'function') {
@@ -37,10 +47,12 @@ function normalizeRoot (moduleData, filePath) {
   return normalizeModule(moduleData, filePath)
 }
 
-function normalizeModule (moduleData, filePath) {
+function normalizeModule(moduleData, filePath) {
   if (moduleData.state && typeof moduleData.state !== 'function') {
     // eslint-disable-next-line no-console
-    console.warn(`'state' should be a method that returns an object in ${filePath}`)
+    console.warn(
+      `'state' should be a method that returns an object in ${filePath}`
+    )
 
     const state = Object.assign({}, moduleData.state)
     // Avoid TypeError: setting a property that has only a getter when overwriting top level keys

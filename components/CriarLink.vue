@@ -14,7 +14,7 @@
           placeholder="Por favor, insira o link que deseja encurtar! P.ex. https://meusite.com"
           label="Link para encurtamento:"
         />
-        <Button :on_click="gerarLink" type="submit" text="Encurtar!"/>
+        <Button :on_click="gerarLink" type="submit" text="Encurtar!" />
       </form>
     </div>
   </section>
@@ -23,79 +23,96 @@
 <script>
 export default {
   name: 'CriarLink',
-  data(){
-    return{
-      url_length: 3
+  data() {
+    return {
+      url_length: 3,
     }
   },
   methods: {
-
     gerarLink: async function () {
-      const titulo = document.querySelector('#titulo').value;
-      let link_original = document.querySelector('#link_original').value;
+      const titulo = document.querySelector('#titulo').value
+      let link_original = document.querySelector('#link_original').value
 
-      if(this.estaVazio([titulo, link_original]) == true){
-        alert("Campos vazios não são permitidos!");
-        this.$store.commit("validar", false);
-        return false;
-      }else if(this.verificaHttpLink(link_original) != true){
-        link_original = this.verificaHttpLink(link_original);
+      if (this.estaVazio([titulo, link_original]) == true) {
+        alert('Campos vazios não são permitidos!')
+        this.$store.commit('validar', false)
+        return false
+      } else if (this.verificaHttpLink(link_original) != true) {
+        link_original = this.verificaHttpLink(link_original)
       }
-      this.$store.commit("validar", true);
+      this.$store.commit('validar', true)
 
-      const link_novo = await this.generateUNID(this.url_length);
+      const link_novo = await this.generateUNID(this.url_length)
 
       /* Verifica se o id já existe no banco de dados; caso não, ele retorna o valor e adiciona as informações no banco de dados. */
-      if(await this.idExists(link_novo, titulo, link_original, link_novo) == "false"){
-        this.$store.commit("gerar", [titulo, this.$store.getters.getApiPath+link_novo]);
-      }else{
-        this.url_length += 1;
-        this.generateUNID(this.url_length);
+      if (
+        (await this.idExists(link_novo, titulo, link_original, link_novo)) ==
+        'false'
+      ) {
+        this.$store.commit('gerar', [
+          titulo,
+          this.$store.getters.getApiPath + link_novo,
+        ])
+      } else {
+        this.url_length += 1
+        this.generateUNID(this.url_length)
       }
       /*=== FIM ===*/
-
     },
 
-    verificaHttpLink: function(link){
-      if(link.substring(0, 4) != "http"){
-        console.log(link.substring(0, 4));
-        link = "http://"+link;
-        return link;
+    verificaHttpLink: function (link) {
+      if (link.substring(0, 4) != 'http') {
+        console.log(link.substring(0, 4))
+        link = 'http://' + link
+        return link
       }
-      return true;
+      return true
     },
 
-    estaVazio: function(campos_a_validar){
-      let vazio = false;
+    estaVazio: function (campos_a_validar) {
+      let vazio = false
       campos_a_validar.map((val) => {
-        if(val == '' || val.length == 0){
-          vazio = true;
-          return;
+        if (val == '' || val.length == 0) {
+          vazio = true
+          return
         }
-      });
-      return vazio;
+      })
+      return vazio
     },
 
-    generateUNID: async function(length){
+    generateUNID: async function (length) {
       /* Gera um ID pseudo aleatório */
-      let result = "";
-      let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let characters_length = characters.length;
+      let result = ''
+      let characters =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      let characters_length = characters.length
 
-      for(let i = 0; i < length; i++){
-        result += characters.charAt(Math.floor(Math.random() * characters_length));
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * characters_length)
+        )
       }
-      return result;
+      return result
     },
 
-    idExists: async function(unid, titulo, link_original, link_novo){
-      const api_request = this.$store.getters.getApiPath+'exists/'+unid+'?titulo='+titulo+'&link_original='+link_original+'&link_novo='+link_novo;
-      const existe = await this.$axios.$get(api_request).then(function(response){
-
-        return response.existe;
-      });
-      return existe;
-    }
+    idExists: async function (unid, titulo, link_original, link_novo) {
+      const api_request =
+        this.$store.getters.getApiPath +
+        'exists/' +
+        unid +
+        '?titulo=' +
+        titulo +
+        '&link_original=' +
+        link_original +
+        '&link_novo=' +
+        link_novo
+      const existe = await this.$axios
+        .$get(api_request)
+        .then(function (response) {
+          return response.existe
+        })
+      return existe
+    },
   },
 }
 </script>
@@ -113,6 +130,4 @@ form {
 .input {
   width: 100%;
 }
-
-
 </style>

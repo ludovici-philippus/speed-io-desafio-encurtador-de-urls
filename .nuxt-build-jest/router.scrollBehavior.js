@@ -19,12 +19,12 @@ if (process.client) {
 }
 
 function shouldScrollToTop(route) {
-   const Pages = getMatchedComponents(route)
-   if (Pages.length === 1) {
-     const { options = {} } = Pages[0]
-     return options.scrollToTop !== false
-   }
-   return Pages.some(({ options }) => options && options.scrollToTop)
+  const Pages = getMatchedComponents(route)
+  if (Pages.length === 1) {
+    const { options = {} } = Pages[0]
+    return options.scrollToTop !== false
+  }
+  return Pages.some(({ options }) => options && options.scrollToTop)
 }
 
 export default function (to, from, savedPosition) {
@@ -58,7 +58,10 @@ export default function (to, from, savedPosition) {
       if (to.hash) {
         let hash = to.hash
         // CSS.escape() is not supported with IE and Edge.
-        if (typeof window.CSS !== 'undefined' && typeof window.CSS.escape !== 'undefined') {
+        if (
+          typeof window.CSS !== 'undefined' &&
+          typeof window.CSS.escape !== 'undefined'
+        ) {
           hash = '#' + window.CSS.escape(hash.substr(1))
         }
         try {
@@ -68,7 +71,9 @@ export default function (to, from, savedPosition) {
           }
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.warn('Failed to save scroll position. Please add CSS.escape() polyfill (https://github.com/mathiasbynens/CSS.escape).')
+          console.warn(
+            'Failed to save scroll position. Please add CSS.escape() polyfill (https://github.com/mathiasbynens/CSS.escape).'
+          )
         }
       }
       resolve(position)

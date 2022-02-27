@@ -2,7 +2,7 @@
   <main>
     <CriarLink />
     <LinkGerado v-if="this.$store.getters.getGerou" />
-    <CardErro v-if="this.$store.getters.getLinkValido == false"/>
+    <CardErro v-if="this.$store.getters.getLinkValido == false" />
   </main>
 </template>
 
@@ -14,7 +14,6 @@ export default {
       gerou: false,
     }
   },
-
 }
 </script>
 

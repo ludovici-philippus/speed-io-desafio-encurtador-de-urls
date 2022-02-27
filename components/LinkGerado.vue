@@ -2,8 +2,18 @@
   <div class="container">
     <div class="card">
       <h2>O seu link foi gerado com sucesso:</h2>
-      <a target="_blank" rel="external" :href="this.$store.getters.getLinkNovo">{{ this.$store.getters.getTitulo }}</a>
-      <a target="_blank" rel="external" :href="this.$store.getters.getLinkNovo">{{ this.$store.getters.getLinkNovo }}</a>
+      <a
+        target="_blank"
+        rel="external"
+        :href="this.$store.getters.getLinkNovo"
+        >{{ this.$store.getters.getTitulo }}</a
+      >
+      <a
+        target="_blank"
+        rel="external"
+        :href="this.$store.getters.getLinkNovo"
+        >{{ this.$store.getters.getLinkNovo }}</a
+      >
     </div>
   </div>
 </template>
@@ -12,10 +22,10 @@
 export default {
   name: 'LinkGerado',
   data() {
-    return{
-      link_valido: this.$store.getters.getLinkValido
+    return {
+      link_valido: this.$store.getters.getLinkValido,
     }
-  }
+  },
 }
 </script>
 
@@ -36,8 +46,7 @@ a:nth-of-type(1) {
   text-decoration: none;
   margin-top: 10px;
 }
-a:nth-of-type(2){
+a:nth-of-type(2) {
   font-weight: lighter;
-
 }
 </style>

@@ -5,15 +5,15 @@ export default {
   props: {
     nuxtChildKey: {
       type: String,
-      default: ''
+      default: '',
     },
     keepAlive: Boolean,
     keepAliveProps: {
       type: Object,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
-  render (_, { parent, data, props }) {
+  render(_, { parent, data, props }) {
     const h = parent.$createElement
 
     data.nuxtChild = true
@@ -77,14 +77,20 @@ export default {
     let routerView = h('routerView', data)
 
     if (props.keepAlive) {
-      routerView = h('keep-alive', { props: props.keepAliveProps }, [routerView])
+      routerView = h('keep-alive', { props: props.keepAliveProps }, [
+        routerView,
+      ])
     }
 
-    return h('transition', {
-      props: transitionProps,
-      on: listeners
-    }, [routerView])
-  }
+    return h(
+      'transition',
+      {
+        props: transitionProps,
+        on: listeners,
+      },
+      [routerView]
+    )
+  },
 }
 
 const transitionsKeys = [
@@ -103,7 +109,7 @@ const transitionsKeys = [
   'appearActiveClass',
   'enterToClass',
   'leaveToClass',
-  'appearToClass'
+  'appearToClass',
 ]
 
 const listenersKeys = [
@@ -118,5 +124,5 @@ const listenersKeys = [
   'beforeAppear',
   'appear',
   'afterAppear',
-  'appearCancelled'
+  'appearCancelled',
 ]

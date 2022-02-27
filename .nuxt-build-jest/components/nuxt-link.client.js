@@ -1,28 +1,33 @@
 import Vue from 'vue'
 
-const requestIdleCallback = window.requestIdleCallback ||
+const requestIdleCallback =
+  window.requestIdleCallback ||
   function (cb) {
     const start = Date.now()
     return setTimeout(function () {
       cb({
         didTimeout: false,
-        timeRemaining: () => Math.max(0, 50 - (Date.now() - start))
+        timeRemaining: () => Math.max(0, 50 - (Date.now() - start)),
       })
     }, 1)
   }
 
-const cancelIdleCallback = window.cancelIdleCallback || function (id) {
-  clearTimeout(id)
-}
+const cancelIdleCallback =
+  window.cancelIdleCallback ||
+  function (id) {
+    clearTimeout(id)
+  }
 
-const observer = window.IntersectionObserver && new window.IntersectionObserver((entries) => {
-  entries.forEach(({ intersectionRatio, target: link }) => {
-    if (intersectionRatio <= 0 || !link.__prefetch) {
-      return
-    }
-    link.__prefetch()
+const observer =
+  window.IntersectionObserver &&
+  new window.IntersectionObserver((entries) => {
+    entries.forEach(({ intersectionRatio, target: link }) => {
+      if (intersectionRatio <= 0 || !link.__prefetch) {
+        return
+      }
+      link.__prefetch()
+    })
   })
-})
 
 // @vue/component
 export default {
@@ -31,19 +36,19 @@ export default {
   props: {
     prefetch: {
       type: Boolean,
-      default: true
+      default: true,
     },
     noPrefetch: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  mounted () {
+  mounted() {
     if (this.prefetch && !this.noPrefetch) {
       this.handleId = requestIdleCallback(this.observe, { timeout: 2e3 })
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     cancelIdleCallback(this.handleId)
 
     if (this.__observed) {
@@ -52,7 +57,7 @@ export default {
     }
   },
   methods: {
-    observe () {
+    observe() {
       // If no IntersectionObserver, avoid prefetching
       if (!observer) {
         return
@@ -64,22 +69,29 @@ export default {
         this.__observed = true
       }
     },
-    shouldPrefetch () {
+    shouldPrefetch() {
       return this.getPrefetchComponents().length > 0
     },
-    canPrefetch () {
+    canPrefetch() {
       const conn = navigator.connection
-      const hasBadConnection = this.$nuxt.isOffline || (conn && ((conn.effectiveType || '').includes('2g') || conn.saveData))
+      const hasBadConnection =
+        this.$nuxt.isOffline ||
+        (conn && ((conn.effectiveType || '').includes('2g') || conn.saveData))
 
       return !hasBadConnection
     },
-    getPrefetchComponents () {
+    getPrefetchComponents() {
       const ref = this.$router.resolve(this.to, this.$route, this.append)
-      const Components = ref.resolved.matched.map(r => r.components.default)
+      const Components = ref.resolved.matched.map((r) => r.components.default)
 
-      return Components.filter(Component => typeof Component === 'function' && !Component.options && !Component.__prefetched)
+      return Components.filter(
+        (Component) =>
+          typeof Component === 'function' &&
+          !Component.options &&
+          !Component.__prefetched
+      )
     },
-    prefetchLink () {
+    prefetchLink() {
       if (!this.canPrefetch()) {
         return
       }
@@ -94,6 +106,6 @@ export default {
         }
         Component.__prefetched = true
       }
-    }
-  }
+    },
+  },
 }

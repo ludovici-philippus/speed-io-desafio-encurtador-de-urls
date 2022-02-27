@@ -20,10 +20,12 @@ function importChunk(chunkId, src) {
 
   // Set a promise in chunk cache
   let resolve, reject
-  const promise = chunksInstalling[chunkId] = new Promise((_resolve, _reject) => {
-    resolve = _resolve
-    reject = _reject
-  })
+  const promise = (chunksInstalling[chunkId] = new Promise(
+    (_resolve, _reject) => {
+      resolve = _resolve
+      reject = _reject
+    }
+  ))
 
   // Clear chunk data from cache
   delete chunks[chunkId]
@@ -39,29 +41,40 @@ function importChunk(chunkId, src) {
   const error = new Error()
 
   // Complete handlers
-  const onScriptComplete = script.onerror = script.onload = (event) => {
-    // Cleanups
-    clearTimeout(timeout)
-    delete chunksInstalling[chunkId]
+  const onScriptComplete =
+    (script.onerror =
+    script.onload =
+      (event) => {
+        // Cleanups
+        clearTimeout(timeout)
+        delete chunksInstalling[chunkId]
 
-    // Avoid mem leaks in IE
-    script.onerror = script.onload = null
+        // Avoid mem leaks in IE
+        script.onerror = script.onload = null
 
-    // Verify chunk is loaded
-    if (chunks[chunkId]) {
-      return resolve(chunks[chunkId])
-    }
+        // Verify chunk is loaded
+        if (chunks[chunkId]) {
+          return resolve(chunks[chunkId])
+        }
 
-    // Something bad happened
-    const errorType = event && (event.type === 'load' ? 'missing' : event.type)
-    const realSrc = event && event.target && event.target.src
-    error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')'
-    error.name = 'ChunkLoadError'
-    error.type = errorType
-    error.request = realSrc
-    failedChunks[chunkId] = error
-    reject(error)
-  }
+        // Something bad happened
+        const errorType =
+          event && (event.type === 'load' ? 'missing' : event.type)
+        const realSrc = event && event.target && event.target.src
+        error.message =
+          'Loading chunk ' +
+          chunkId +
+          ' failed.\n(' +
+          errorType +
+          ': ' +
+          realSrc +
+          ')'
+        error.name = 'ChunkLoadError'
+        error.type = errorType
+        error.request = realSrc
+        failedChunks[chunkId] = error
+        reject(error)
+      })
 
   // Timeout
   timeout = setTimeout(() => {
@@ -76,7 +89,9 @@ function importChunk(chunkId, src) {
 }
 
 export function installJsonp() {
-  window.__NUXT_JSONP__ = function (chunkId, exports) { chunks[chunkId] = exports }
+  window.__NUXT_JSONP__ = function (chunkId, exports) {
+    chunks[chunkId] = exports
+  }
   window.__NUXT_JSONP_CACHE__ = chunks
   window.__NUXT_IMPORT__ = importChunk
 }

@@ -4,7 +4,8 @@
       <div class="logo">
         <NuxtLink to="/"><h1>Encurtador de URLs</h1></NuxtLink>
         <p>
-          Ninguém gosta de links enormes e complexos, mantenha-os simples conosco!
+          Ninguém gosta de links enormes e complexos, mantenha-os simples
+          conosco!
         </p>
       </div>
       <HeaderLinks />
