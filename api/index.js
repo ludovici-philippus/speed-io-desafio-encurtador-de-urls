@@ -68,7 +68,22 @@ app.post("/login", async(req, res) => {
     const json_parsed = JSON.parse(json_data);
     res.jsonp(json_parsed);
   }
-})
+});
+
+app.post("/cadastro", async(req, res) => {
+  const username = req.body.username_post;
+  const email = req.body.email_post;
+  const senha = req.body.senha_post;
+
+  console.log(username);
+  console.log(email);
+  console.log(senha);
+
+  const sql = await db.connect();
+  await sql.execute("INSERT INTO `tb_users` VALUES (null, ?, ?, ?)", [username, email, senha]);
+  res.end("Conta criada com sucesso!");
+
+});
 
 app.get('/', async (req, res) => {
   const sql = await db.connect();

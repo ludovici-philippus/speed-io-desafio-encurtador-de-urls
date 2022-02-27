@@ -70,6 +70,15 @@
           alert("Campos vazios não são permitidos!");
           return;
         }
+
+        await this.$axios.post(this.$store.getters.getApiPath+"cadastro", {
+              username_post: username,
+              email_post: email,
+              senha_post: senha
+            }).then(function(response){
+              alert("Conta criada com sucesso! Por favor, faça login com seu e-mail e senha!");
+            })
+            this.criar_conta = false;
       },
 
     },
