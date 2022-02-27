@@ -6,7 +6,7 @@
  - Incrementar o número de visitas de uma url a cada visita. [x]
  - Página com o top 100 de urls visitadas [x]
  - Mostrar o titulo das urls no top100 [x]
- - Escrever documentação de como rodar o projeto []
+ - Escrever documentação de como rodar o projeto [x]
  - Explicar partes do código que poderiam ser melhoradas se tivesse mais tempo disponível e porque. []
  - Usar Vuejs no Frontend [x]
  - Backend Nodejs ou Rails [x]
