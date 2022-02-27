@@ -15,7 +15,7 @@ app.use(
 
 app.use(
   session({
-    secret: 'secretsession',
+    secret: 'secretsession-23141129142',
     saveUninitialized: false,
     resave: false
   })
@@ -33,17 +33,69 @@ app.use(function (req, res, next) {
 })
 /*==FIM==*/
 
+var sess = {usuario: false, unid: -1};
+
+app.get("/is-logged", async(req, res) => {
+  console.log(sess.usuario);
+  if(!sess.usuario){
+    const json_data = '{"logado":false}'
+    const json_parsed = JSON.parse(json_data);
+    res.jsonp(json_parsed)
+  }else{
+    const json_data = '{"logado":true}'
+    const json_parsed = JSON.parse(json_data);
+    res.jsonp(json_parsed)
+  }
+})
+
+app.post("/login", async(req, res) => {
+  const email = req.body.email_post;
+  const senha = req.body.senha_post;
+
+  const sql = await db.connect();
+  const [row] = await sql.execute("SELECT * FROM `tb_users` WHERE email = ? AND senha = ?", [email, senha]);
+  if(row.length == 1){
+    sess = req.session;
+    sess.usuario = true;
+    sess.unid = row[0].id;
+    sess.nome = row[0].usuario;
+
+    const json_data = '{"logado":true}'
+    const json_parsed = JSON.parse(json_data);
+    res.jsonp(json_parsed)
+  }else{
+    const json_data = '{"logado":false}'
+    const json_parsed = JSON.parse(json_data);
+    res.jsonp(json_parsed);
+  }
+})
+
 app.get('/', async (req, res) => {
   const sql = await db.connect();
   const [row] = await sql.execute("SELECT * FROM `tb_links`")
   res.end('aaaa')
 });
 
-app.get("/get-urls", async(req, res) => {
+app.post("/get-urls", async(req, res) => {
   const sql = await db.connect();
-  const [row] = await sql.execute("SELECT * FROM `tb_links` ORDER BY views DESC");
-  res.jsonp(row);
+  if(req.body.somente_os_meus == false){
+    const [row] = await sql.execute("SELECT * FROM `tb_links` ORDER BY views DESC");
+    res.jsonp(row);
+  }
+  else if(req.body.somente_os_meus == true && sess.unid != -1){
+    const [row] = await sql.execute("SELECT * FROM `tb_links` WHERE id_usuario = ? ORDER BY views DESC", [sess.unid]);
+    res.jsonp(row);
+  }
 });
+
+app.get("/deletar", async(req, res) => {
+  const sql = await db.connect();
+  const id = req.query.id;
+  if(sess.unid != -1){
+    const [row] = await sql.execute("DELETE FROM `tb_links` WHERE id = ? AND id_usuario = ?", [id, sess.unid]);
+    res.end("Deletado com sucesso!");
+  }
+})
 
 app.get("/:slug", async (req, res) => {
   const sql = await db.connect();
@@ -83,7 +135,12 @@ async function create_short_link(req, sql){
       const link_original = req.query.link_original;
       const link_novo = req.query.link_novo;
 
-      await sql.execute("INSERT INTO `tb_links` VALUES (null, ?, ?, ?, null, 0)", [titulo, link_original, link_novo]);
+      if(sess.unid == -1)
+        await sql.execute("INSERT INTO `tb_links` VALUES (null, ?, ?, ?, null, 0)", [titulo, link_original, link_novo]);
+      else{
+        console.log(sess);
+        await sql.execute("INSERT INTO `tb_links` VALUES (null, ?, ?, ?, ?, 0)", [titulo, link_original, link_novo, sess.unid]);
+      }
 }
 
 async function add_view_to_link(req, sql){

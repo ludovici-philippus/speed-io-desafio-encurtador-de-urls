@@ -3,6 +3,7 @@
     <ul>
       <li><NuxtLink to="/">Home</NuxtLink></li>
       <li><NuxtLink to="/top-cem">Top 100</NuxtLink></li>
+      <li><NuxtLink to="/minha-conta">Minha Conta</NuxtLink></li>
     </ul>
   </nav>
 </template>

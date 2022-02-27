@@ -14,7 +14,7 @@
           placeholder="Por favor, insira o link que deseja encurtar! P.ex. https://meusite.com"
           label="Link para encurtamento:"
         />
-        <button @click.prevent="gerarLink()" type="submit">Encurtar!</button>
+        <Button :on_click="gerarLink" type="submit" text="Encurtar!"/>
       </form>
     </div>
   </section>
@@ -57,7 +57,8 @@ export default {
     },
 
     verificaHttpLink: function(link){
-      if(link.substring(0, 3) != "http"){
+      if(link.substring(0, 4) != "http"){
+        console.log(link.substring(0, 4));
         link = "http://"+link;
         return link;
       }
@@ -113,19 +114,5 @@ form {
   width: 100%;
 }
 
-button {
-  padding: 10px 20px;
-  border: 1px solid var(--cor-4);
-  color: white;
-  background-color: var(--cor-4);
-  cursor: pointer;
-  margin-bottom: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  transition: 0.5s;
-}
 
-button:hover {
-  background-color: #2392ba;
-}
 </style>

@@ -5,7 +5,8 @@ export const state = () => ({
   link_valido: true,
   titulo: "",
   link_novo: "",
-  api_path: "http://localhost:5000/"
+  api_path: "http://localhost:5000/",
+  logged: false,
 })
 
 export const mutations = {
@@ -16,6 +17,9 @@ export const mutations = {
   },
   validar(state, value){
     state.link_valido = value;
+  },
+  logar(state, value){
+    state.logged = value;
   }
 }
 
@@ -34,5 +38,8 @@ export const getters = {
   },
   getLinkValido(state){
     return state.link_valido;
+  },
+  getLogged(state){
+    return state.logged;
   }
 }

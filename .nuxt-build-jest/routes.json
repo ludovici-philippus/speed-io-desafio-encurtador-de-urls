@@ -1,0 +1,16 @@
+[
+  {
+    "name": "top-cem",
+    "path": "/top-cem",
+    "component": "/home/luis/Documents/projeto-speedio/pages/top-cem.vue",
+    "chunkName": "pages/top-cem",
+    "_name": "_c78cccd0"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/home/luis/Documents/projeto-speedio/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_64b26e57"
+  }
+]

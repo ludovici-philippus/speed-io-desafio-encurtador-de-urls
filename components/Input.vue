@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <label :for="name">{{ label }}</label>
-    <input type="text" :name="name" :id="name" :placeholder="placeholder" required/>
+    <input :type="input_type" :name="name" :id="name" :placeholder="placeholder" required/>
   </div>
 </template>
 
@@ -12,7 +12,12 @@ export default {
     name: String,
     placeholder: String,
     label: String,
+    input_type: {
+      type: String,
+      default: "text"
+    },
   },
+
 }
 </script>
 
