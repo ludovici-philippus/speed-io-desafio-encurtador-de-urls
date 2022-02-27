@@ -6,6 +6,7 @@ Projeto de encurtador de urls, feito com VueJS e NodeJS para o desafio da Speed 
 
 - NPM ou Yarn
 - Git
+- MySQL / MariaDB
 
 ## Instalando dependências:
 
