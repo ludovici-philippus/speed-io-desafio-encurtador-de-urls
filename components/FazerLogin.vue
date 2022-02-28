@@ -108,18 +108,22 @@ export default {
         return
       }
 
-      await this.$axios
+      const criou = await this.$axios
         .post(this.$store.getters.getApiPath + 'cadastro', {
           username_post: username,
           email_post: email,
           senha_post: senha,
         })
         .then(function (response) {
-          alert(
-            'Conta criada com sucesso! Por favor, faça login com seu e-mail e senha!'
-          )
+          if (response.data.conseguiu == true) {
+            alert('Conta criada com sucesso')
+            return true
+          } else {
+            alert('Falha ao criar conta. Nome de usuário ou e-mail já existe!')
+            return false
+          }
         })
-      this.criar_conta = false
+      this.criar_conta = !criou
     },
   },
 }

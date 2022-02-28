@@ -78,12 +78,25 @@ app.post('/cadastro', async (req, res) => {
   const senha = req.body.senha_post
 
   const sql = await db.connect()
-  await sql.execute('INSERT INTO `tb_users` VALUES (null, ?, ?, ?)', [
-    username,
-    email,
-    senha,
-  ])
-  res.end('Conta criada com sucesso!')
+  const [row] = await sql.execute(
+    'SELECT * FROM `tb_users` WHERE usuario = ? OR email = ?',
+    [username, email]
+  )
+
+  if (row.length != 0) {
+    const json_data = '{"conseguiu":false, "msg": "Conta já existe!"}'
+    const json_parsed = JSON.parse(json_data)
+    res.jsonp(json_parsed)
+  } else {
+    await sql.execute('INSERT INTO `tb_users` VALUES (null, ?, ?, ?)', [
+      username,
+      email,
+      senha,
+    ])
+    const json_data = '{"conseguiu":true, "msg": "Conta criada com sucesso!"}'
+    const json_parsed = JSON.parse(json_data)
+    res.json(json_parsed)
+  }
 })
 
 app.get('/sair', async (req, res) => {
@@ -94,7 +107,7 @@ app.get('/sair', async (req, res) => {
 app.get('/', async (req, res) => {
   const sql = await db.connect()
   const [row] = await sql.execute('SELECT * FROM `tb_links`')
-  res.end()
+  res.end('Conectado')
 })
 
 app.post('/get-urls', async (req, res) => {
