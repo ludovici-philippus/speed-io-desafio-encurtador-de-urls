@@ -52,6 +52,8 @@ O banco de dados utilizado é o MariaDB, o arquivo com as tabelas foi disponibil
 - Entre no banco de dados recém criado: "USE encurtador_links".
 - Importe as tabelas com o comando: "source ./encurtador_links.sql"
 
+Feito isso, abra o arquivo: db.js, na pasta da API e faça as devidas configurações (HOST, USER, PASSWORD, DATABASE), para que a API possa se conectar ao banco de dados.
+
 ## Como executar o projeto
 
 - Acesse a pasta da api e execute o comando: node index.js, isso ira iniciar o servidor node em: http://localhost:5000.
