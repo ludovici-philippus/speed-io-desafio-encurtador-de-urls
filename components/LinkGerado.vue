@@ -21,11 +21,6 @@
 <script>
 export default {
   name: 'LinkGerado',
-  data() {
-    return {
-      link_valido: this.$store.getters.getLinkValido,
-    }
-  },
 }
 </script>
 

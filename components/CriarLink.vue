@@ -26,12 +26,20 @@ export default {
   data() {
     return {
       url_length: 3,
+      titulo_testes: '',
+      link_original_testes: '',
     }
   },
   methods: {
     gerarLink: async function () {
-      const titulo = document.querySelector('#titulo').value
-      let link_original = document.querySelector('#link_original').value
+      const titulo =
+        document.querySelector('input[name="titulo"]') != null
+          ? document.querySelector('input[name="titulo"]').value
+          : this.titulo_testes
+      let link_original =
+        document.querySelector('input[name="link_original"]') != null
+          ? document.querySelector('input[name="link_original"]').value
+          : this.link_original_testes
 
       if (this.estaVazio([titulo, link_original]) == true) {
         alert('Campos vazios não são permitidos!')
@@ -45,14 +53,12 @@ export default {
       const link_novo = await this.generateUNID(this.url_length)
 
       /* Verifica se o id já existe no banco de dados; caso não, ele retorna o valor e adiciona as informações no banco de dados. */
-      if (
-        (await this.idExists(link_novo, titulo, link_original, link_novo)) ==
-        'false'
-      ) {
+      if ((await this.idExists(link_novo, titulo, link_original)) == 'false') {
         this.$store.commit('gerar', [
           titulo,
           this.$store.getters.getApiPath + link_novo,
         ])
+        return true
       } else {
         this.url_length += 1
         this.generateUNID(this.url_length)
@@ -62,7 +68,6 @@ export default {
 
     verificaHttpLink: function (link) {
       if (link.substring(0, 4) != 'http') {
-        console.log(link.substring(0, 4))
         link = 'http://' + link
         return link
       }
@@ -95,7 +100,7 @@ export default {
       return result
     },
 
-    idExists: async function (unid, titulo, link_original, link_novo) {
+    idExists: async function (unid, titulo, link_original) {
       const api_request =
         this.$store.getters.getApiPath +
         'exists/' +
@@ -105,7 +110,7 @@ export default {
         '&link_original=' +
         link_original +
         '&link_novo=' +
-        link_novo
+        unid
       const existe = await this.$axios
         .$get(api_request)
         .then(function (response) {

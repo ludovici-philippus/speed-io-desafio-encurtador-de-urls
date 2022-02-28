@@ -1,7 +1,12 @@
 <template>
   <main>
     <CriarLink />
-    <LinkGerado v-if="this.$store.getters.getGerou" />
+    <LinkGerado
+      v-if="
+        this.$store.getters.getGerou &&
+        this.$store.getters.getLinkValido == true
+      "
+    />
     <CardErro v-if="this.$store.getters.getLinkValido == false" />
   </main>
 </template>

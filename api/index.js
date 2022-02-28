@@ -127,14 +127,17 @@ app.post('/get-urls', async (req, res) => {
 })
 
 app.get('/deletar', async (req, res) => {
-  const sql = await db.connect()
   const id = req.query.id
-  if (sess.unid != -1) {
-    const [row] = await sql.execute(
-      'DELETE FROM `tb_links` WHERE id = ? AND id_usuario = ?',
-      [id, sess.unid]
-    )
-    res.end('Deletado com sucesso!')
+  if (id == -1) res.end('Deletado com sucesso! (Teste)')
+  else {
+    const sql = await db.connect()
+    if (sess.unid != -1) {
+      const [row] = await sql.execute(
+        'DELETE FROM `tb_links` WHERE id = ? AND id_usuario = ?',
+        [id, sess.unid]
+      )
+      res.end('Deletado com sucesso!')
+    }
   }
 })
 

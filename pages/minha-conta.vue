@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'minha-conta',
+  name: 'minhaConta',
   methods: {
     check_login: async function () {
       const login = await this.$axios

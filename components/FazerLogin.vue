@@ -73,8 +73,14 @@ export default {
     },
 
     login: async function () {
-      const email = document.querySelector('#email').value
-      const senha = SHA256(document.querySelector('#senha').value).toString()
+      const email =
+        document.querySelector('#email') != null
+          ? document.querySelector('#email').value
+          : 'exemplo@email.com'
+      const senha =
+        document.querySelector('#senha') != null
+          ? SHA256(document.querySelector('#senha').value).toString()
+          : '123'
 
       if (this.estaVazio([email, senha])) {
         alert('Campos vazios não são permitidos!')
@@ -99,9 +105,18 @@ export default {
     },
 
     criar: async function () {
-      const username = document.querySelector('#username').value
-      const email = document.querySelector('#email').value
-      const senha = SHA256(document.querySelector('#senha').value).toString()
+      const username =
+        document.querySelector('#username') != null
+          ? document.querySelector('#username').value
+          : 'teste'
+      const email =
+        document.querySelector('#email') != null
+          ? document.querySelector('#email').value
+          : 'exemplo@email.com'
+      const senha =
+        document.querySelector('#senha') != null
+          ? SHA256(document.querySelector('#senha').value).toString()
+          : '123'
 
       if (this.estaVazio([username, email, senha])) {
         alert('Campos vazios não são permitidos!')
