@@ -60,3 +60,10 @@ O banco de dados utilizado é o MariaDB, o arquivo com as tabelas foi disponibil
 ## Como modificar o endereço da API para produção
 
 Caso o projeto seja posto em produção, a única coisa que precisará ser mudadá será o arquivo index.js dentro de store, lá dentro existe um state api_path que denota o caminho para a API, portanto para produção, basta trocar o http://localhost:5000 para o domínio próprio.
+
+## Vídeo de Demonstração
+
+
+https://user-images.githubusercontent.com/37634205/156067063-74b64767-205c-4020-92e7-646098ae2453.mp4
+
+
