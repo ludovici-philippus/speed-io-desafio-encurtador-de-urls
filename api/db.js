@@ -6,6 +6,7 @@ const connect = async () => {
   const connection = await mysql.createConnection({
     host: 'localhost',
     user: 'root',
+    password: '',
     database: 'encurtador_links',
   })
   console.log('Conectou ao banco')
