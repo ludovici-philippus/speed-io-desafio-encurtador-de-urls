@@ -48,9 +48,9 @@ O banco de dados utilizado é o MariaDB, o arquivo com as tabelas foi disponibil
 ### Terminal:
 
 - Inicie o seu banco de dados com o comando: mariadb ou mysql, dentro da raiz do projeto.
-- Crie um novo banco de dados com: "CREATE DATABASE encurtador_links".
-- Entre no banco de dados recém criado: "USE encurtador_links".
-- Importe as tabelas com o comando: "source ./encurtador_links.sql"
+- Crie um novo banco de dados com: "CREATE DATABASE encurtador_links";.
+- Entre no banco de dados recém criado: "USE encurtador_links";.
+- Importe as tabelas com o comando: "source ./encurtador_links.sql;"
 
 Feito isso, abra o arquivo: db.js, na pasta da API e faça as devidas configurações (HOST, USER, PASSWORD, DATABASE), para que a API possa se conectar ao banco de dados.
 
